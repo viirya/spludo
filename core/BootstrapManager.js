@@ -91,6 +91,8 @@ BootstrapManager.prototype.whenReady = function(parts, callback) {
     var check_if_ready_timer = null;
     
     var parts_length = parts.length;
+    var check_time = 0;
+    var max_check = 10;
     var checkIfReadyHandler = function() {
         var tokens_missing = 0;
         var parts_waiting = 0;
@@ -110,7 +112,8 @@ BootstrapManager.prototype.whenReady = function(parts, callback) {
             clearInterval(check_if_ready_timer);
             callback();
         } else {
-            setTimeout(checkIfReadyHandler, 100);
+            if (check_time++ < max_check)
+                setTimeout(checkIfReadyHandler, 100);
         }
     };
     
